@@ -1,0 +1,21 @@
+---
+spring:
+  profiles: local
+  jpa.hibernate.naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+  datasource.platform: h2
+  h2.console.enabled: true
+
+---
+spring:
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+
+
+---
+# disable rabbitmq
+spring:
+  profiles: nr
+  cloud.bus:
+    enabled: false
+    amqp.enabled: false

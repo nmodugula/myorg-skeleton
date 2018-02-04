@@ -1,0 +1,119 @@
+buildscript {
+    ext {
+        springBootVersion = '1.5.9.RELEASE'
+        springfoxVersion = '2.5.0'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("io.spring.gradle:dependency-management-plugin:0.6.0.RELEASE")
+        classpath "org.springframework.cloud:spring-cloud-contract-gradle-plugin:1.0.1.RELEASE"
+
+    }
+
+}
+
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'groovy'
+apply plugin: 'org.springframework.boot'
+
+group = "com.myorg.ecomm"
+version = 1.0
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    providedRuntime
+}
+
+dependencies {
+
+    // Spring Boot libraries
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-aop')
+    compile('org.springframework.boot:spring-boot-starter-actuator')
+    compile('org.springframework.boot:spring-boot-starter-data-rest')
+    providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
+
+    // Spring Cloud libraries
+    compile('org.springframework.cloud:spring-cloud-starter-eureka')
+    compile('org.springframework.cloud:spring-cloud-starter-config')
+    compile('org.springframework.cloud:spring-cloud-starter-bus-amqp')
+    compile('org.springframework.cloud:spring-cloud-starter-hystrix')
+    compile('org.springframework.cloud:spring-cloud-starter-hystrix-dashboard')
+    
+    
+	
+    
+
+    compile('org.springframework.retry:spring-retry:1.2.1.RELEASE')
+
+    // Database
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("com.h2database:h2")
+
+    // Logging
+    compile('org.apache.logging.log4j:log4j-api')
+    compile('org.apache.logging.log4j:log4j-core')
+    compile('net.logstash.logback:logstash-logback-encoder:4.7')
+    compile('org.springframework.cloud:spring-cloud-starter-sleuth')
+    compile('org.springframework.cloud:spring-cloud-sleuth-zipkin')
+
+    // Lombok
+    compile('org.projectlombok:lombok:1.16.20')
+
+        // Swagger
+    compile("io.springfox:springfox-swagger-ui:${springfoxVersion}")
+    compile("io.springfox:springfox-swagger2:${springfoxVersion}")
+
+    // Jackson
+    compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.4')
+
+    // Testing helpers
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
+
+    // https://mvnrepository.com/artifact/com.jayway.jsonpath/json-path
+    testCompile('com.jayway.jsonpath:json-path:2.4.0')
+
+    // Swagger Doc Generation
+    testCompile("io.springfox:springfox-staticdocs:${springfoxVersion}")
+
+
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:Camden.SR5"
+
+    }
+}
+
+bootRun {
+    systemProperties System.properties
+}
+
+
+test {
+    systemProperties System.properties
+}
+
+
+
+eclipse {
+    classpath {
+        containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
+        containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
+    }
+}
+
