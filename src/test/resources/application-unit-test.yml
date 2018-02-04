@@ -1,0 +1,5 @@
+eureka.client.enabled: false
+logging.level.org.springframework.web: DEBUG
+
+---
+# these properties are loaded when the active profile is "unit-test"
